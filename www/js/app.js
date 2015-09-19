@@ -41,7 +41,15 @@ angular.module('starter', ['ionic', 'starter.controllers'])
             }
         }
     })
-
+        .state('app.rateseller', {
+            url: '/rateseller',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/rateseller.html',
+                 
+                }
+            }
+        })
     .state('app.help', {
         url: '/help',
         views: {
@@ -49,7 +57,16 @@ angular.module('starter', ['ionic', 'starter.controllers'])
                 templateUrl: 'templates/help.html'
             }
         }
-    });
+    })
+        .state('app.cause', {
+            url: '/cause',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/cause.html'
+                }
+            }
+        })
+    
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/startpage');
 });
