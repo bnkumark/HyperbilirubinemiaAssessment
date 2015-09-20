@@ -44,7 +44,9 @@ angular.module('starter.controllers', [])
 .controller('StartPageCtrl', function ($scope) {
 
     $scope.data = {
-        result: ''
+        result: '',
+        phototherapyThresold:'',
+        exchangeTransfusionThreshold:''
     }
 
     $scope.GetResult= function(infantDetails)
@@ -54,50 +56,79 @@ angular.module('starter.controllers', [])
         if(infantDetails.Gestation == "23 Weeks")
         {
             $scope.data.result = calculateResult(infantDetails.Age, infantDetails.Bilirubin, 40, 80, 130, 230, (4/3), (8 / 5));
+            $scope.data.phototherapyThresold = calculateThreshold1(infantDetails.Age,40, 80, 130, 230, (4/3), (8 / 5));
+            $scope.data.exchangeTransfusionThreshold = calculateThreshold2(infantDetails.Age,40, 80, 130, 230, (4/3), (8 / 5));
         }
         else if (infantDetails.Gestation == "24 Weeks") {
             $scope.data.result = calculateResult(infantDetails.Age, infantDetails.Bilirubin, 40,80 ,140 , 240,(6/5) ,(3/2) );
+            $scope.data.phototherapyThresold = calculateThreshold1(infantDetails.Age,40,80,140,240,(6/5),(3/2) );
+            $scope.data.exchangeTransfusionThreshold = calculateThreshold2(infantDetails.Age,40, 80,140 , 240,(6/5) ,(3/2) );
         }
         else if (infantDetails.Gestation == "25 Weeks") {
             $scope.data.result = calculateResult(infantDetails.Age, infantDetails.Bilirubin, 40,80 ,150 , 250,(12/11) ,(24/17) );
+            $scope.data.phototherapyThresold = calculateThreshold1(infantDetails.Age,40, 80, 130, 150 , 250,(12/11),(24/17));
+            $scope.data.exchangeTransfusionThreshold = calculateThreshold2(infantDetails.Age,40, 80,150 , 250,(12/11) ,(24/17));
         }
         else if (infantDetails.Gestation == "26 Weeks") {
-            $scope.data.result = calculateResult(infantDetails.Age, infantDetails.Bilirubin, 40, 80, 160, 260, 1, (4 / 3));
+            $scope.data.result = calculateResult(infantDetails.Age, infantDetails.Bilirubin,40,80,160,260,1,(4 / 3));
+            $scope.data.phototherapyThresold = calculateThreshold1(infantDetails.Age,40, 80, 130, 230, (4/3), (8 / 5));
+            $scope.data.exchangeTransfusionThreshold = calculateThreshold2(infantDetails.Age,40, 80, 130, 230, (4/3), (8 / 5));
         }
         else if(infantDetails.Gestation == "27 Weeks")
         {
             //(y-y1)=((y2-y1)/(x2-x1))*(x-x1) equation of straight line passign through 2 points-- convert to intercept form to find y/y1+x/x1=1
             $scope.data.result = calculateResult(infantDetails.Age, infantDetails.Bilirubin, 40, 80, 170, 270, (12 / 13), (24 / 19));//(y-40)=((170-40)/(3-0))(x-0) //(y-80)=((270-80)/(3-0))(x-0)
+            $scope.data.phototherapyThresold = calculateThreshold1(infantDetails.Age,40, 80, 170, 270, (12 / 13), (24 / 19));
+            $scope.data.exchangeTransfusionThreshold = calculateThreshold2(infantDetails.Age,40, 80, 170, 270, (12 / 13), (24 / 19));
         }
         else if (infantDetails.Gestation == "28 Weeks") {
             $scope.data.result = calculateResult(infantDetails.Age, infantDetails.Bilirubin, 40, 80, 180, 280, (6 / 7), (6 / 5));
+            $scope.data.phototherapyThresold = calculateThreshold1(infantDetails.Age,40, 80, 180, 280, (6 / 7), (6 / 5));
+            $scope.data.exchangeTransfusionThreshold = calculateThreshold2(infantDetails.Age,40, 80, 180, 280, (6 / 7), (6 / 5));
         }
         else if (infantDetails.Gestation == "29 Weeks") {
             $scope.data.result = calculateResult(infantDetails.Age, infantDetails.Bilirubin,40 ,80 ,190 ,290 , (4/5),(8/7) );
+            $scope.data.phototherapyThresold = calculateThreshold1(infantDetails.Age,40, 80,190 ,290 , (4/5),(8/7) );
+            $scope.data.exchangeTransfusionThreshold = calculateThreshold2(infantDetails.Age,40, 80, 190 ,290 , (4/5),(8/7) );
         }
         else if (infantDetails.Gestation == "30 Weeks") {
             $scope.data.result = calculateResult(infantDetails.Age, infantDetails.Bilirubin,40 ,80 ,200 ,300 ,(3/4) ,(12/11) );
+            $scope.data.phototherapyThresold = calculateThreshold1(infantDetails.Age,40, 80,,200 ,300 ,(3/4) ,(12/11)));
+            $scope.data.exchangeTransfusionThreshold = calculateThreshold2(infantDetails.Age,40, 80,,200 ,300 ,(3/4) ,(12/11));
         }
         else if (infantDetails.Gestation == "31 Weeks") {
             $scope.data.result = calculateResult(infantDetails.Age, infantDetails.Bilirubin,40 , 80, 210,310 ,(12/17) ,(24/23) );
+            $scope.data.phototherapyThresold = calculateThreshold1(infantDetails.Age,40, 80, 210,310 ,(12/17) ,(24/23));
+            $scope.data.exchangeTransfusionThreshold = calculateThreshold2(infantDetails.Age,40, 80, 210,310 ,(12/17) ,(24/23));
         }
         else if (infantDetails.Gestation == "32 Weeks") {
             $scope.data.result = calculateResult(infantDetails.Age, infantDetails.Bilirubin, 40, 80,220 ,320 , (2/3), 1);
+            $scope.data.phototherapyThresold = calculateThreshold1(infantDetails.Age,40, 80,220 ,320 , (2/3), 1);
+            $scope.data.exchangeTransfusionThreshold = calculateThreshold2(infantDetails.Age,40, 80,220 ,320 , (2/3), 1);
         }
         else if (infantDetails.Gestation == "33 Weeks") {
             $scope.data.result = calculateResult(infantDetails.Age, infantDetails.Bilirubin, 40,80 ,230 , 330,(12/19) , (24/25));
+            $scope.data.phototherapyThresold = calculateThreshold1(infantDetails.Age,40,230 , 330,(12/19) , (24/25));
+            $scope.data.exchangeTransfusionThreshold = calculateThreshold2(infantDetails.Age,40, 80,230 , 330,(12/19) , (24/25));
         }
         else if (infantDetails.Gestation == "34 Weeks") {
             $scope.data.result = calculateResult(infantDetails.Age, infantDetails.Bilirubin, 40,80 ,240 , 340,(3/5) ,(12/13) );
-        }
+            $scope.data.phototherapyThresold = calculateThreshold1(infantDetails.Age,40, 80, 240 , 340,(3/5) ,(12/13) );
+            $scope.data.exchangeTransfusionThreshold = calculateThreshold2(infantDetails.Age,40, 80, 240 , 340,(3/5) ,(12/13) );
         else if (infantDetails.Gestation == "35 Weeks") {
             $scope.data.result = calculateResult(infantDetails.Age, infantDetails.Bilirubin, 40, 80,250 ,350 ,(4/7) ,(8/9) );
+            $scope.data.phototherapyThresold = calculateThreshold1(infantDetails.Age,40, 80,250 ,350 ,(4/7) ,(8/9) );
+            $scope.data.exchangeTransfusionThreshold = calculateThreshold2(infantDetails.Age,40, 80,250 ,350 ,(4/7) ,(8/9) );
         }
         else if (infantDetails.Gestation == "36 Weeks") {
             $scope.data.result = calculateResult(infantDetails.Age, infantDetails.Bilirubin, 40, 80, 260, 360, (6 / 11), (6 / 7));
+            $scope.data.phototherapyThresold = calculateThreshold1(infantDetails.Age,40, 80, 260, 360, (6 / 11), (6 / 7));
+            $scope.data.exchangeTransfusionThreshold = calculateThreshold2(infantDetails.Age,40, 80,  260, 360, (6 / 11), (6 / 7));
         }
         else if (infantDetails.Gestation == "37 Weeks") {
             $scope.data.result = calculateResult(infantDetails.Age, infantDetails.Bilirubin, 40, 80, 270, 370, (12 / 23), (24 / 29));
+            $scope.data.phototherapyThresold = calculateThreshold1(infantDetails.Age,40, 80,270, 370, (12 / 23), (24 / 29));
+            $scope.data.exchangeTransfusionThreshold = calculateThreshold2(infantDetails.Age,40, 80, 270, 370, (12 / 23), (24 / 29));
         }
         else if (infantDetails.Gestation == "38 Weeks") {
             $scope.data.result = calculateFor38Week(infantDetails.Age, infantDetails.Bilirubin);
@@ -106,7 +137,33 @@ angular.module('starter.controllers', [])
         //    $scope.data.result = "invalid data";
         //}
     }
+    function calculateThreshold1(x,y1,y2,y3,y4,x1,x2){
+        x = x / 24; //hours to days
+        if (x>=0 && x<3) {
+            y=(1+(x/x1))*(y1);
+            y = y/17.1;
+            return y;
+        };
+        if (x>=3 && x<=14) {
+            y=y3;
+            y = y/17.1;
+            return y;
+        };
 
+    }
+    function calculateThreshold2(x,y1,y2,y3,y4,x1,x2){
+       x = x / 24; //hours to days
+       if (x>=0 &&x<3) {
+        y=(1+(x/x2))*(y2);
+         y = y/17.1;
+        return y;
+       }; 
+       if (x>=3 && x<=14) {
+            y=y4;
+            y = y/17.1;
+           return y;
+        };
+    }
     function calculateResult(x, y, y1, y2, y3, y4, x1, x2) {
         console.log("called with" + x + "," + y + "," + y1 + "," + y2 + "," + y3 + "," + y4 + "," + x1 + "," + x2);
         y = 17.1 * y;
