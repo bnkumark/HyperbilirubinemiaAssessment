@@ -93,8 +93,8 @@ angular.module('starter.controllers', [])
         }
         else if (infantDetails.Gestation == "30 Weeks") {
             $scope.data.result = calculateResult(infantDetails.Age, infantDetails.Bilirubin,40 ,80 ,200 ,300 ,(3/4) ,(12/11) );
-            $scope.data.phototherapyThresold = calculateThreshold1(infantDetails.Age,40, 80,,200 ,300 ,(3/4) ,(12/11)));
-            $scope.data.exchangeTransfusionThreshold = calculateThreshold2(infantDetails.Age,40, 80,,200 ,300 ,(3/4) ,(12/11));
+            $scope.data.phototherapyThresold = calculateThreshold1(infantDetails.Age,40, 80,200 ,300 ,(3/4) ,(12/11));
+            $scope.data.exchangeTransfusionThreshold = calculateThreshold2(infantDetails.Age,40, 80,200 ,300 ,(3/4) ,(12/11));
         }
         else if (infantDetails.Gestation == "31 Weeks") {
             $scope.data.result = calculateResult(infantDetails.Age, infantDetails.Bilirubin,40 , 80, 210,310 ,(12/17) ,(24/23) );
@@ -115,6 +115,7 @@ angular.module('starter.controllers', [])
             $scope.data.result = calculateResult(infantDetails.Age, infantDetails.Bilirubin, 40,80 ,240 , 340,(3/5) ,(12/13) );
             $scope.data.phototherapyThresold = calculateThreshold1(infantDetails.Age,40, 80, 240 , 340,(3/5) ,(12/13) );
             $scope.data.exchangeTransfusionThreshold = calculateThreshold2(infantDetails.Age,40, 80, 240 , 340,(3/5) ,(12/13) );
+        }
         else if (infantDetails.Gestation == "35 Weeks") {
             $scope.data.result = calculateResult(infantDetails.Age, infantDetails.Bilirubin, 40, 80,250 ,350 ,(4/7) ,(8/9) );
             $scope.data.phototherapyThresold = calculateThreshold1(infantDetails.Age,40, 80,250 ,350 ,(4/7) ,(8/9) );
