@@ -64,9 +64,16 @@
             <div class="item item-text-wrap">
                 {{data.result}}
                 <br /><span class="positive">(Reference - NICE guidelines 2010)</span>
-            </div>            
-        </div>
-        <div class="card" ng-show="data.phototherapyThresold!=''">
+            </div>   
+            <div class="item item-text-wrap">
+                Phototherapy Threshold - {{data.ptt}}
+            </div>  
+            
+                <div class="item item-text-wrap">
+                    Exchange Transfusion Threshold - {{data.eTT}}
+                </div>
+            </div>
+        <!--<div class="card" ng-show="data.phototherapyThresold!=''">
             <div class="item item-text-wrap">
                Phototherapy Threshold - {{data.ptt}}
             </div>
@@ -75,6 +82,6 @@
             <div class="item item-text-wrap">
                 Exchange Transfusion Threshold - {{data.eTT}}
             </div>
-        </div>
+        </div>-->
     </ion-content>
 </ion-view>
