@@ -86,47 +86,47 @@ angular.module('starter.controllers', [])
             $scope.data.eTT = calcETT(infantDetails.BilirubinUnits,infantDetails.Age, 40, 80, 180, 280, (6 / 7), (6 / 5));
         }
         else if (infantDetails.Gestation == "29 Weeks") {
-            $scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 190, 290, (4 / 5), (8 / 7));
+            //$scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 190, 290, (4 / 5), (8 / 7));
             $scope.data.ptt = calcPTT(infantDetails.BilirubinUnits,infantDetails.Age, 40, 80, 190, 290, (4 / 5), (8 / 7));
             $scope.data.eTT = calcETT(infantDetails.BilirubinUnits,infantDetails.Age, 40, 80, 190, 290, (4 / 5), (8 / 7));
         }
         else if (infantDetails.Gestation == "30 Weeks") {
-            $scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 200, 300, (3 / 4), (12 / 11));
+            //$scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 200, 300, (3 / 4), (12 / 11));
             $scope.data.ptt = calcPTT(infantDetails.BilirubinUnits,infantDetails.Age, 40, 80, 200, 300, (3 / 4), (12 / 11));
             $scope.data.eTT = calcETT(infantDetails.BilirubinUnits,infantDetails.Age, 40, 80, 200, 300, (3 / 4), (12 / 11));
         }
         else if (infantDetails.Gestation == "31 Weeks") {
-            $scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 210, 310, (12 / 17), (24 / 23));
+            //$scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 210, 310, (12 / 17), (24 / 23));
             $scope.data.ptt = calcPTT(infantDetails.BilirubinUnits,infantDetails.Age, 40, 80, 210, 310, (12 / 17), (24 / 23));
             $scope.data.eTT = calcETT(infantDetails.BilirubinUnits,infantDetails.Age, 40, 80, 210, 310, (12 / 17), (24 / 23));
         }
         else if (infantDetails.Gestation == "32 Weeks") {
-            $scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 220, 320, (2 / 3), 1);
+            //$scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 220, 320, (2 / 3), 1);
             $scope.data.ptt = calcPTT(infantDetails.BilirubinUnits,infantDetails.Age, 40, 80, 220, 320, (2 / 3), 1);
             $scope.data.eTT = calcETT(infantDetails.BilirubinUnits,infantDetails.Age, 40, 80, 220, 320, (2 / 3), 1);
         }
         else if (infantDetails.Gestation == "33 Weeks") {
-            $scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 230, 330, (12 / 19), (24 / 25));
+            //$scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 230, 330, (12 / 19), (24 / 25));
             $scope.data.ptt = calcPTT(infantDetails.BilirubinUnits,infantDetails.Age, 40, 80, 230, 330, (12 / 19), (24 / 25));
             $scope.data.eTT = calcETT(infantDetails.BilirubinUnits,infantDetails.Age, 40, 80, 230, 330, (12 / 19), (24 / 25));
         }
         else if (infantDetails.Gestation == "34 Weeks") {
-            $scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 240, 340, (3 / 5), (12 / 13));
+            //$scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 240, 340, (3 / 5), (12 / 13));
             $scope.data.ptt = calcPTT(infantDetails.BilirubinUnits,infantDetails.Age, 40, 80, 240, 340, (3 / 5), (12 / 13));
             $scope.data.eTT = calcETT(infantDetails.BilirubinUnits,infantDetails.Age, 40, 80, 240, 340, (3 / 5), (12 / 13));
         }
         else if (infantDetails.Gestation == "35 Weeks") {
-            $scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 250, 350, (4 / 7), (8 / 9));
+            //$scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 250, 350, (4 / 7), (8 / 9));
             $scope.data.ptt = calcPTT(infantDetails.BilirubinUnits,infantDetails.Age, 40, 80, 250, 350, (4 / 7), (8 / 9));
             $scope.data.eTT = calcETT(infantDetails.BilirubinUnits,infantDetails.Age, 40, 80, 250, 350, (4 / 7), (8 / 9));
         }
         else if (infantDetails.Gestation == "36 Weeks") {
-            $scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 260, 360, (6 / 11), (6 / 7));
+            //$scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 260, 360, (6 / 11), (6 / 7));
             $scope.data.ptt = calcPTT(infantDetails.BilirubinUnits,infantDetails.Age, 40, 80, 260, 360, (6 / 11), (6 / 7));
             $scope.data.eTT = calcETT(infantDetails.BilirubinUnits,infantDetails.Age, 40, 80, 260, 360, (6 / 11), (6 / 7));
         }
         else if (infantDetails.Gestation == "37 Weeks") {
-            $scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 270, 370, (12 / 23), (24 / 29));
+            //$scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 270, 370, (12 / 23), (24 / 29));
             $scope.data.ptt = calcPTT(infantDetails.BilirubinUnits,infantDetails.Age, 40, 80, 270, 370, (12 / 23), (24 / 29));
             $scope.data.eTT = calcETT(infantDetails.BilirubinUnits,infantDetails.Age, 40, 80, 270, 370, (12 / 23), (24 / 29));
         }
