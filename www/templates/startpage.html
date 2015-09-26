@@ -1,4 +1,5 @@
 <ion-view view-title="">
+<div ng-controller="StartPageCtrl">
     <ion-content>
         <h3 class="title item">Newborn Hyperbilirubinemia Assessment</h3>
         <form name="submitform" novalidate class="css-form" ng-model="infantDetails" ng-submit="GetResult(infantDetails)">
@@ -73,6 +74,7 @@
                     Exchange Transfusion Threshold - {{data.eTT}}
                 </div>
             </div>
+</div>
         <!--<div class="card" ng-show="data.phototherapyThresold!=''">
             <div class="item item-text-wrap">
                Phototherapy Threshold - {{data.ptt}}
@@ -83,5 +85,6 @@
                 Exchange Transfusion Threshold - {{data.eTT}}
             </div>
         </div>-->
+
     </ion-content>
 </ion-view>

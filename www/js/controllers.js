@@ -41,6 +41,58 @@ angular.module('starter.controllers', [])
     };
 })
 
+.controller("GraphCtrl", ['$scope', '$timeout', function ($scope, $timeout) {
+
+ $scope.labels = ["0","3","6","9","12","14"];
+ $scope.series = ["Phototherapy Line", "Exchange Transfusion Line"];
+ $scope.data = [
+    [40, 160, 160, 160, 160, 160],
+    [80, 260, 260, 260, 260, 260]
+  ];
+  $scope.bezierCurve = [false,false];
+  $scope.onClick = function (points,evt) {
+    console.log(points,evt);
+  };
+
+  // Simulate async data update
+  $timeout(function () {
+    $scope.data = [
+      [40, 160, 160, 160, 160, 160],
+      [80, 260, 260, 260, 260, 260]
+  ];
+  }, 3000);
+
+
+   /*var data = {
+      labels : ["0","3","6","9","12","14"],
+      datasets : [
+        {
+          label: "Phototherapy Line",
+          fillColor : "rgba(220,220,220,0.5)",
+          strokeColor : "rgba(220,220,220,1)",
+          pointColor : "rgba(220,220,220,1)",
+          pointStrokeColor : "#fff",
+          bezierCurve : false,
+          data : [40, 160, 160, 160, 160, 160]
+        },
+        {
+          label: "Exchange Transfusion Line",
+          fillColor : "rgba(151,187,205,0.5)",
+          strokeColor : "rgba(151,187,205,1)",
+          pointColor : "rgba(151,187,205,1)",
+          pointStrokeColor : "#fff",
+          bezierCurve : false,
+          data : [80, 260, 260, 260, 260, 260]
+        }
+      ]
+    }
+
+   // $scope.myChart.data = data;*/
+
+}])
+
+
+
 .controller('StartPageCtrl', function ($scope) {
 
     $scope.data = {
