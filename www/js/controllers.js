@@ -134,29 +134,21 @@ angular.module('starter.controllers', [])
         if (infantDetails.Gestation == ">=38 Weeks") {
             //$scope.data.result = calculateFor38Week(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin));
             $scope.data.ptt = calcPTTWeekGT38(infantDetails.BilirubinUnits, infantDetails.Age);
-            $scope.data.eTT = calcETTWeekGT38(infantDetails.BilirubinUnits, infantDetails.Age, 100, 450, (3.57/7))
+            $scope.data.eTT = calcETTWeekGT38(infantDetails.BilirubinUnits, infantDetails.Age, 100, 450, (3.57 / 7))
         }
-       // else
-        {
-            console.log("Old result" + $scope.data.result);
-            $scope.data.result = calculateFromThresholdUnder38Weeks({
-                units: infantDetails.BilirubinUnits,
-                Bilirubin: infantDetails.Bilirubin,
-                eTT: $scope.data.eTT,
-                ptt: $scope.data.ptt,
-                week: infantDetails.Gestation
-
-            })
-        }
-
-        //else {
-        //    $scope.data.result = "invalid data";
-        //}
+        
+        $scope.data.result = calculateResultFromThreshold({
+            Age : infantDetails.Age,
+            units: infantDetails.BilirubinUnits,
+            Bilirubin: infantDetails.Bilirubin,
+            eTT: $scope.data.eTT,
+            ptt: $scope.data.ptt,
+            week: infantDetails.Gestation
+        });
     }
-
-
-    function calculateFromThresholdUnder38Weeks(data) {
-        console.log("calculateFromThresholdUnder38Weeks:" + data.Bilirubin)
+    
+    function calculateResultFromThreshold(data) {
+        console.log("calculateResultFromThreshold:" + data.Bilirubin)
         var diffP = data.ptt - data.Bilirubin;
         var diffT = data.eTT - data.Bilirubin;
         var closeRange = 3;
@@ -168,9 +160,65 @@ angular.module('starter.controllers', [])
         if (data.Bilirubin < data.ptt) {
             if (data.week == ">=38 Weeks")
             {
-                if((data.ptt - data.Bilirubin) <= closeRange)
+                console.log(">=38 Weeks");
+                var result = "Consider phototherapy - Repeat serum bilirubin levels in 6-12 hrs";
+                var resultAboveRange = "Start phototherapy (consider multiple phototherapy)";
+                var multiplier = 1;
+
+                if(data.units == "mg/dl")
                 {
-                    return "Consider phototherapy - Repeat serum bilirubin levels in 6-12 hrs";
+                    multiplier = 17.1;
+                }
+                //Start----This is special consideration if under 24hours age
+                if (data.Age >= 6 && data.Age < 12) {
+                    closeRange = 112 + ((125 - 112) * ((data.Age - 6) / 6));       
+                                    
+                    if ((data.Bilirubin * multiplier) >= closeRange && (data.Bilirubin * multiplier) <= 125)
+                    {
+                        console.log("close range+" + closeRange);
+                        return result;
+                    }
+                    else if ((data.Bilirubin * multiplier) > 125)
+                    {
+                        return resultAboveRange;
+                    }
+                }
+                else if (data.Age >= 12 && data.Age < 18) {
+                    closeRange = 125 + (150 - 125) * ((data.Age - 12) / 6);
+                    if (data.Bilirubin * multiplier >= closeRange && (data.Bilirubin * multiplier) <= 150)
+                    {
+                        console.log("close range+" + closeRange);
+                        return result;
+                    }
+                    else if ((data.Bilirubin * multiplier) > 150) {
+                        return resultAboveRange;
+                    }
+                }
+                else if (data.Age >= 18 && data.Age < 24)
+                {
+                    closeRange = 137 + (175 - 137) * ((data.Age - 18) / 6);
+                    if(data.Bilirubin * multiplier >= closeRange&& (data.Bilirubin * multiplier) <= 175)
+                    {
+                        console.log("close range+" + closeRange);
+                        return result;
+                    }
+                    else if ((data.Bilirubin * multiplier) > 175) {
+                        return resultAboveRange;
+                    }
+                }
+                else if (data.Age == 24) {
+                    if (data.Bilirubin * multiplier >= 150 && (data.Bilirubin * multiplier) <= 200) {
+                        console.log("close range 150");
+                        return result;
+                    }
+                    else if ((data.Bilirubin * multiplier) > 200) {
+                        return resultAboveRange;
+                    }
+                }
+                //end --------------------------------
+
+                else if((data.ptt - data.Bilirubin) <= closeRange)    {
+                    return result;
                 }
             }
             return "No treatment required. Repeat serum bilirubin levels if clinically icteric in 6-12 hrs";
@@ -288,72 +336,72 @@ angular.module('starter.controllers', [])
     //    }
     //}
 
-    function calculateFor38Week(x, y) {
-        console.log("called with" + x + "," + y);
-        //y = 17.1 * y;
-        x = x / 24; //hours to days
-        var Result1 = "No risk";
-        var Result2 = "Phototherapy";
-        var Result3 = "Exchange Transfusion";
-        var Result4 = "Invalid Input";
-        if (x >= 0 && x < 1) {
-            if (y >= 0 && (y / 100) - (x / 1) < 1) {//Region 1
-                return Result1;
-            };
-            if ((y / 100) - (x / 1) >= 1 && (y / 100) - (x / (1 / 2)) < 1) {
-                return Result2;
-            };
-            if ((y / 100) - (x / (1 / 2)) >= 1) {
-                return Result3;
-            }
-            else return Result4;
-        };
-        if (x >= 1 && x < 1.75) {
-            if (y >= 0 && (y / 150) - (x / 3) < 1) {
-                return Result1;
-            };
-            if ((y / 150) - (x / 3) >= 1 && (y / 100) - (x / (1 / 2)) < 1) {
-                return Result2;
-            };
-            if ((y / 100) - (x / (1 / 2)) >= 1) {
-                return Result3;
-            }
-            else return Result4;
-        };
-        if (x >= 1.75 && x < 4) {
-            if (y >= 0 && (y / 150) - (x / 3) < 1) {
-                return Result1;
-            };
-            if ((y / 150) - (x / 3) >= 1 && y < 450) {
-                return Result2;
-            };
-            if (y >= 450) {
-                return Result3;
-            }
-            else return Result4;
-        };
-        if (x >= 4 && x <= 14) {
-            if (y >= 0 && y < 350) {
-                return Result1;
-            };
-            if (y >= 350 && y < 450) {
-                return Result2;
-            };
-            if (y >= 450) {
-                return Result3;
-            }
-            else return Result4;
-        }
-        else return Result4;
-    }
+    //function calculateFor38Week(x, y) {
+    //    console.log("called with" + x + "," + y);
+    //    //y = 17.1 * y;
+    //    x = x / 24; //hours to days
+    //    var Result1 = "No risk";
+    //    var Result2 = "Phototherapy";
+    //    var Result3 = "Exchange Transfusion";
+    //    var Result4 = "Invalid Input";
+    //    if (x >= 0 && x < 1) {
+    //        if (y >= 0 && (y / 100) - (x / 1) < 1) {//Region 1
+    //            return Result1;
+    //        };
+    //        if ((y / 100) - (x / 1) >= 1 && (y / 100) - (x / (1 / 2)) < 1) {
+    //            return Result2;
+    //        };
+    //        if ((y / 100) - (x / (1 / 2)) >= 1) {
+    //            return Result3;
+    //        }
+    //        else return Result4;
+    //    };
+    //    if (x >= 1 && x < 1.75) {
+    //        if (y >= 0 && (y / 150) - (x / 3) < 1) {
+    //            return Result1;
+    //        };
+    //        if ((y / 150) - (x / 3) >= 1 && (y / 100) - (x / (1 / 2)) < 1) {
+    //            return Result2;
+    //        };
+    //        if ((y / 100) - (x / (1 / 2)) >= 1) {
+    //            return Result3;
+    //        }
+    //        else return Result4;
+    //    };
+    //    if (x >= 1.75 && x < 4) {
+    //        if (y >= 0 && (y / 150) - (x / 3) < 1) {
+    //            return Result1;
+    //        };
+    //        if ((y / 150) - (x / 3) >= 1 && y < 450) {
+    //            return Result2;
+    //        };
+    //        if (y >= 450) {
+    //            return Result3;
+    //        }
+    //        else return Result4;
+    //    };
+    //    if (x >= 4 && x <= 14) {
+    //        if (y >= 0 && y < 350) {
+    //            return Result1;
+    //        };
+    //        if (y >= 350 && y < 450) {
+    //            return Result2;
+    //        };
+    //        if (y >= 450) {
+    //            return Result3;
+    //        }
+    //        else return Result4;
+    //    }
+    //    else return Result4;
+    //}
 
-    function GetBilurubinValueInMicromol(units, value) {
-        if (units == "mg/dl") {
-            return 17.1 * value;
-        }
-        else
-            return value;
-    }
+    //function GetBilurubinValueInMicromol(units, value) {
+    //    if (units == "mg/dl") {
+    //        return 17.1 * value;
+    //    }
+    //    else
+    //        return value;
+    //}
 
     function returnProperValue(units, value) {
         if (units == "mg/dl") {

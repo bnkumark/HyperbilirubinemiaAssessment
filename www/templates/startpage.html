@@ -3,85 +3,103 @@
         <h3 class="title item">Newborn Hyperbilirubinemia Assessment</h3>
         <form name="submitform" novalidate class="css-form" ng-model="infantDetails" ng-submit="GetResult(infantDetails)">
 
-            <!--<label class="item item-input item-stacked-label">
-                <span class="input-label positive">Infant Age:</span>
-                <input type="number" name="name" placeholder="in Hours" ng-model="infantDetails.Age" required>
-            </label>-->
-            
             <div class="item item-input-inset">
                 <label class="item-input-wrapper">
                     <span class="input-label positive">Infant Age:</span>
-                    <input type="number" name="name"  ng-model="infantDetails.Age" required>
+                    <input type="number" name="name" ng-model="infantDetails.Age" required>
                 </label>
                 <span>&nbsp;</span>
                 <span>Hours</span>
-                </div>
-                <!--<label class="item item-input item-stacked-label">
-            <span class="input-label positive">Total Bilirubin:</span>
-            <input type="number" name="Bilirubin" placeholder="in mg/dl" ng-model="infantDetails.Bilirubin" required>
-        </label>-->
+            </div>
 
-                <div class="item item-input-inset">
-                    <label class="item-input-wrapper">
-                        <span class="input-label positive">Total Bilirubin:</span>
-                        <input type="number"  ng-model="infantDetails.Bilirubin" required>
-                    </label>
-                    <span>&nbsp;</span>
-                    <select id="units" class="small" name='options' ng-model="infantDetails.BilirubinUnits" required>
-                        <option selected>mg/dl</option>
-                        <option>micromol/litre</option>
-                    </select>
-                </div>
-
-                <label class="item item-input item-select">
-                    <div class="input-label positive">
-                        Gestation
-                    </div>
-                    <select id="Gestation " name='options' ng-model="infantDetails.Gestation" required>
-                        <option>23 Weeks</option>
-                        <option>24 Weeks</option>
-                        <option>25 Weeks</option>
-                        <option>26 Weeks</option>
-                        <option>27 Weeks</option>
-                        <option>28 Weeks</option>
-                        <option>29 Weeks</option>
-                        <option>30 Weeks</option>
-                        <option>31 Weeks</option>
-                        <option>32 Weeks</option>
-                        <option>33 Weeks</option>
-                        <option>34 Weeks</option>
-                        <option>35 Weeks</option>
-                        <option>36 Weeks</option>
-                        <option>37 Weeks</option>
-                        <option>>=38 Weeks</option>
-                    </select>
+            <div class="item item-input-inset">
+                <label class="item-input-wrapper">
+                    <span class="input-label positive">Total Bilirubin:</span>
+                    <input type="number" ng-model="infantDetails.Bilirubin" required>
                 </label>
-                <div class="item item-input-inset">
-                    <input class="item-input-wrapper button button-positive" ng-disabled="!submitform.$valid" value="Recommended Treatment" type="submit">
+                <span>&nbsp;</span>
+                <select id="units" class="small" name='options' ng-model="infantDetails.BilirubinUnits" required>
+                    <option selected>mg/dl</option>
+                    <option>micromol/litre</option>
+                </select>
+            </div>
+
+            <label class="item item-input item-select">
+                <div class="input-label positive">
+                    Gestation
                 </div>
-</form>
+                <select id="Gestation " name='options' ng-model="infantDetails.Gestation" required>
+                    <option>23 Weeks</option>
+                    <option>24 Weeks</option>
+                    <option>25 Weeks</option>
+                    <option>26 Weeks</option>
+                    <option>27 Weeks</option>
+                    <option>28 Weeks</option>
+                    <option>29 Weeks</option>
+                    <option>30 Weeks</option>
+                    <option>31 Weeks</option>
+                    <option>32 Weeks</option>
+                    <option>33 Weeks</option>
+                    <option>34 Weeks</option>
+                    <option>35 Weeks</option>
+                    <option>36 Weeks</option>
+                    <option>37 Weeks</option>
+                    <option>>=38 Weeks</option>
+                </select>
+            </label>
+            <div class="item item-input-inset">
+                <input class="item-input-wrapper button button-positive" ng-disabled="!submitform.$valid" value="Recommended Treatment" type="submit">
+            </div>
+        </form>
         <div class="card" ng-show="data.result!=''">
             <div class="item item-text-wrap">
                 {{data.result}}
                 <br /><span class="positive">(Reference - NICE guidelines 2010)</span>
-            </div>   
+            </div>
             <div class="item item-text-wrap">
                 Phototherapy Threshold - {{data.ptt}}
-            </div>  
-            
-                <div class="item item-text-wrap">
-                    Exchange Transfusion Threshold - {{data.eTT}}
-                </div>
             </div>
-        <!--<div class="card" ng-show="data.phototherapyThresold!=''">
-            <div class="item item-text-wrap">
-               Phototherapy Threshold - {{data.ptt}}
-            </div>
-        </div>
-        <div class="card" ng-show="data.exchangeTransfusionThreshold!=''">
+
             <div class="item item-text-wrap">
                 Exchange Transfusion Threshold - {{data.eTT}}
             </div>
-        </div>-->
+        </div>
+        <head>
+            <script type="text/javascript"
+                    src="https://www.google.com/jsapi?autoload={
+            'modules':[{
+              'name':'visualization',
+              'version':'1',
+              'packages':['corechart']
+            }]
+          }"></script>
+
+            <script type="text/javascript">
+      google.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Year', 'Sales', 'Expenses'],
+          ['2004',  1000,      400],
+          ['2005',  1170,      460],
+          ['2006',  660,       1120],
+          ['2007',  1030,      540]
+        ]);
+
+        var options = {
+          title: 'Company Performance',
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+      }
+            </script>
+        </head>
+        <body>
+            <div id="curve_chart" style="width: 900px; height: 500px"></div>
+        </body>
     </ion-content>
 </ion-view>
