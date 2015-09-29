@@ -189,6 +189,9 @@ angular.module('starter.controllers', [])
             $scope.data.eTT = calcETTWeekGT38(infantDetails.BilirubinUnits, infantDetails.Age, 100, 450, (3.57 / 7))
         }
         
+        $scope.data.ptt = $scope.data.ptt.toFixed(2);
+        $scope.data.eTT = $scope.data.eTT.toFixed(2);
+
         $scope.data.result = calculateResultFromThreshold({
             Age : infantDetails.Age,
             units: infantDetails.BilirubinUnits,
@@ -213,9 +216,10 @@ angular.module('starter.controllers', [])
             if (data.week == ">=38 Weeks")
             {
                 console.log(">=38 Weeks");
-                var result = "Consider phototherapy - Repeat serum bilirubin levels in 6-12 hrs";
-                var resultAboveRange = "Start phototherapy (consider multiple phototherapy)";
+                var result = "Can consider phototherapy - Repeat serum bilirubin levels in 6-12 hrs";
+                var resultAboveRange = "Start phototherapy (can consider multiple phototherapy)";
                 var multiplier = 1;
+                var closeRangeEnd;
 
                 if(data.units == "mg/dl")
                 {
@@ -223,38 +227,43 @@ angular.module('starter.controllers', [])
                 }
                 //Start----This is special consideration if under 24hours age
                 if (data.Age >= 6 && data.Age < 12) {
-                    closeRange = 112 + ((125 - 112) * ((data.Age - 6) / 6));       
-                                    
-                    if ((data.Bilirubin * multiplier) >= closeRange && (data.Bilirubin * multiplier) <= 125)
+                    closeRange    = 112 + ((125 - 112) * ((data.Age - 6) / 6));       
+                    closeRangeEnd = 125 + ((150 - 125) * ((data.Age - 6) / 6));
+                    if ((data.Bilirubin * multiplier) >= closeRange && (data.Bilirubin * multiplier) <= closeRangeEnd)
                     {
                         console.log("close range+" + closeRange);
+                        console.log("close rangeEnd+" + closeRangeEnd);
                         return result;
                     }
-                    else if ((data.Bilirubin * multiplier) > 125)
+                    else if ((data.Bilirubin * multiplier) > closeRangeEnd)
                     {
                         return resultAboveRange;
                     }
                 }
                 else if (data.Age >= 12 && data.Age < 18) {
                     closeRange = 125 + (150 - 125) * ((data.Age - 12) / 6);
-                    if (data.Bilirubin * multiplier >= closeRange && (data.Bilirubin * multiplier) <= 150)
+                    closeRangeEnd = 150 + ((175 - 150) * ((data.Age - 12) / 6));
+                    if (data.Bilirubin * multiplier >= closeRange && (data.Bilirubin * multiplier) <= closeRangeEnd)
                     {
                         console.log("close range+" + closeRange);
+                        console.log("close rangeEnd+" + closeRangeEnd);
                         return result;
                     }
-                    else if ((data.Bilirubin * multiplier) > 150) {
+                    else if ((data.Bilirubin * multiplier) > closeRangeEnd) {
                         return resultAboveRange;
                     }
                 }
                 else if (data.Age >= 18 && data.Age < 24)
                 {
                     closeRange = 137 + (175 - 137) * ((data.Age - 18) / 6);
-                    if(data.Bilirubin * multiplier >= closeRange&& (data.Bilirubin * multiplier) <= 175)
+                    closeRangeEnd = 175 + ((200 - 175) * ((data.Age - 18) / 6));
+                    if (data.Bilirubin * multiplier >= closeRange && (data.Bilirubin * multiplier) <= closeRangeEnd)
                     {
                         console.log("close range+" + closeRange);
+                        console.log("close rangeEnd+" + closeRangeEnd);
                         return result;
                     }
-                    else if ((data.Bilirubin * multiplier) > 175) {
+                    else if ((data.Bilirubin * multiplier) > closeRangeEnd) {
                         return resultAboveRange;
                     }
                 }
@@ -277,7 +286,7 @@ angular.module('starter.controllers', [])
         }
         else if (data.Bilirubin < data.eTT) {
             if ((data.eTT - data.Bilirubin) <= closeRange) {
-                return "Start phototherapy (consider multiple phototherapy)";
+                return "Start phototherapy (can consider multiple phototherapy)";
             }
             else {
                 return "Start phototherapy and repeat serum bilirubin levels in 6-12 hours";
