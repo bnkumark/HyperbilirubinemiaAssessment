@@ -93,7 +93,13 @@ angular.module('starter.controllers', [])
 
 
 
-.controller('StartPageCtrl', function ($scope) {
+.controller('StartPageCtrl', function ($scope,$state) {
+
+    if (window.localStorage['isProfileLogged'] != "true") {
+        console.log('calling profile');
+        $state.go('app.profile');
+    };
+
 
     $scope.data = {
         result: '',
@@ -471,7 +477,17 @@ angular.module('starter.controllers', [])
         else
             return value;
     }
-});
+})
 
-//.controller('PlaylistCtrl', function ($scope, $stateParams) {
-//});
+.controller('profileCtrl', function ($scope, $ionicAnalytics) {
+
+    $scope.logAnalytics = function (profileDetails) {
+        console.log("check" + profileDetails.Occupation);
+        $ionicAnalytics.track('Profile', {
+            Occupation: profileDetails.Occupation,
+            speciality: profileDetails.speciality,
+            other: profileDetails.other
+        });
+        window.localStorage['isProfileLogged'] = true;
+    }
+});

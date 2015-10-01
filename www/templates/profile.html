@@ -1,0 +1,39 @@
+<ion-view view-title="Profile">
+  <ion-content>
+      <h3 class="title item">Please enter your profile details</h3>
+          <form name="profileform" novalidate class="css-form" ng-model="profileDetails" ng-submit="logAnalytics(profileDetails)">
+              <div class="item item-input-inset item-select" id="Occupation">
+                  <div class="input-label positive">
+                      Occupation
+                  </div>
+                  <select ng-model="profileDetails.Occupation" required>
+                      <option ng-value="Doctor">Doctor</option>
+                      <option ng-value="Nurse">Nurse</option>
+                      <option ng-value="Others">Others</option>
+                  </select>
+              </div>
+              <div class="item item-input-inset item-select" id="doctor" ng-show="profileDetails.Occupation!='Others'">
+                  <div class="input-label positive">
+                      Speciality
+                  </div>
+                  <select ng-model="profileDetails.speciality">
+                      <option>Pediatrician</option>
+                      <option>Gynacologist</option>
+                      <option>General Physician</option>
+                  </select>
+              </div>
+              <div class="item item-input-inset" id="other" ng-show="profileDetails.Occupation=='Others'">
+                  <div class="input-label positive">
+                      Specify
+                  </div>
+                  <label class="item-input-wrapper">
+                      <input type="text" class="input" ng-model="profileDetails.other" ng-minlength="1">
+                  </label>
+              </div>
+              <div class="item item-input-inset">
+                  <input class="item-input-wrapper button button-positive" ng-disabled="!profileform.$valid" value="Submit" type="submit">
+              </div>
+          </form>
+
+</ion-content>
+</ion-view>

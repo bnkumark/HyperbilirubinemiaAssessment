@@ -4,12 +4,15 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers','chart.js'])
+angular.module('starter', ['ionic','ionic.service.core', 'ionic.service.analytics', 'starter.controllers','chart.js'])
 
 
 
-.run(function($ionicPlatform) {
-  $ionicPlatform.ready(function() {
+.run(function ($ionicPlatform, $ionicAnalytics) {
+    $ionicPlatform.ready(function () {
+
+        $ionicAnalytics.register();
+
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     if (window.cordova && window.cordova.plugins.Keyboard) {
@@ -44,15 +47,7 @@ angular.module('starter', ['ionic', 'starter.controllers','chart.js'])
             }
         }
     })
-        .state('app.rateseller', {
-            url: '/rateseller',
-            views: {
-                'menuContent': {
-                    templateUrl: 'templates/rateseller.html',
-                 
-                }
-            }
-        })
+        
         .state('app.graph', {
            url: '/graph',
           views: {
@@ -78,7 +73,15 @@ angular.module('starter', ['ionic', 'starter.controllers','chart.js'])
                 }
             }
         })
-    
+     .state('app.profile', {
+         url: '/profile',
+         views: {
+             'menuContent': {
+                 templateUrl: 'templates/profile.html',
+                 controller: 'profileCtrl'
+             }
+         }
+     })
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/startpage');
 });
