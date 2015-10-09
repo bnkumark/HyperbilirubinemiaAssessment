@@ -43,171 +43,199 @@ angular.module('starter.controllers', [])
 
 .controller("GraphCtrl", ['$scope', '$timeout', function ($scope, $timeout) {
 
- $scope.labels = ["0","3","6","9","12","14"];
- $scope.series = ["Phototherapy Line", "Exchange Transfusion Line"];
- $scope.data = [
-    [40, 160, 160, 160, 160, 160],
-    [80, 260, 260, 260, 260, 260]
-  ];
-  $scope.bezierCurve = [false,false];
-  $scope.onClick = function (points,evt) {
-    console.log(points,evt);
-  };
-
-  // Simulate async data update
-  $timeout(function () {
+    $scope.labels = ["0", "3", "6", "9", "12", "14"];
+    $scope.series = ["Phototherapy Line", "Exchange Transfusion Line"];
     $scope.data = [
-      [40, 160, 160, 160, 160, 160],
-      [80, 260, 260, 260, 260, 260]
-  ];
-  }, 3000);
+       [40, 160, 160, 160, 160, 160],
+       [80, 260, 260, 260, 260, 260]
+    ];
+    $scope.bezierCurve = [false, false];
+    $scope.onClick = function (points, evt) {
+        console.log(points, evt);
+    };
+
+    // Simulate async data update
+    $timeout(function () {
+        $scope.data = [
+          [40, 160, 160, 160, 160, 160],
+          [80, 260, 260, 260, 260, 260]
+        ];
+    }, 3000);
 
 
-   /*var data = {
-      labels : ["0","3","6","9","12","14"],
-      datasets : [
-        {
-          label: "Phototherapy Line",
-          fillColor : "rgba(220,220,220,0.5)",
-          strokeColor : "rgba(220,220,220,1)",
-          pointColor : "rgba(220,220,220,1)",
-          pointStrokeColor : "#fff",
-          bezierCurve : false,
-          data : [40, 160, 160, 160, 160, 160]
-        },
-        {
-          label: "Exchange Transfusion Line",
-          fillColor : "rgba(151,187,205,0.5)",
-          strokeColor : "rgba(151,187,205,1)",
-          pointColor : "rgba(151,187,205,1)",
-          pointStrokeColor : "#fff",
-          bezierCurve : false,
-          data : [80, 260, 260, 260, 260, 260]
-        }
-      ]
-    }
-
-   // $scope.myChart.data = data;*/
+    /*var data = {
+       labels : ["0","3","6","9","12","14"],
+       datasets : [
+         {
+           label: "Phototherapy Line",
+           fillColor : "rgba(220,220,220,0.5)",
+           strokeColor : "rgba(220,220,220,1)",
+           pointColor : "rgba(220,220,220,1)",
+           pointStrokeColor : "#fff",
+           bezierCurve : false,
+           data : [40, 160, 160, 160, 160, 160]
+         },
+         {
+           label: "Exchange Transfusion Line",
+           fillColor : "rgba(151,187,205,0.5)",
+           strokeColor : "rgba(151,187,205,1)",
+           pointColor : "rgba(151,187,205,1)",
+           pointStrokeColor : "#fff",
+           bezierCurve : false,
+           data : [80, 260, 260, 260, 260, 260]
+         }
+       ]
+     }
+ 
+    // $scope.myChart.data = data;*/
 
 }])
 
-
-
-.controller('StartPageCtrl', function ($scope,$state) {
+.controller('StartPageCtrl', function ($scope, $state) {
 
     if (window.localStorage['isProfileLogged'] != "true") {
         console.log('calling profile');
         $state.go('app.profile');
     };
 
-
     $scope.data = {
         result: '',
-        pt: '',
+        ptt: '',
         eTT: ''
     }
 
     $scope.GetResult = function (infantDetails) {
-        console.log("GetResult called" + infantDetails.Gestation);
 
-        //(y-y1)=((y2-y1)/(x2-x1))*(x-x1) equation of straight line passign through 2 points-- convert to intercept form to find y/y1+x/x1=1
-        //(y-40)=((170-40)/(3-0))(x-0) //(y-80)=((270-80)/(3-0))(x-0)
+        var proceed = true;
+        console.log("infant.age:" + infantDetails.Age)
+        console.log("infant.age:" + infantDetails.Age <= 336)
 
-        if (infantDetails.Gestation == "23 Weeks") {
-            //$scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 130, 230, (4 / 3), (8 / 5));
-            $scope.data.ptt = calcPTT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 130, 230, (4 / 3), (8 / 5));
-            $scope.data.eTT = calcETT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 130, 230, (4 / 3), (8 / 5));
-        }
-        else if (infantDetails.Gestation == "24 Weeks") {
-            //$scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 140, 240, (6 / 5), (3 / 2));
-            $scope.data.ptt = calcPTT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 140, 240, (6 / 5), (3 / 2));
-            $scope.data.eTT = calcETT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 140, 240, (6 / 5), (3 / 2));
-        }
-        else if (infantDetails.Gestation == "25 Weeks") {
-            //$scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 150, 250, (12 / 11), (24 / 17));
-            $scope.data.ptt = calcPTT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 150, 250, (12 / 11), (24 / 17));
-            $scope.data.eTT = calcETT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 150, 250, (12 / 11), (24 / 17));
-        }
-        else if (infantDetails.Gestation == "26 Weeks") {
-            // $scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 160, 260, 1, (4 / 3));
-            $scope.data.ptt = calcPTT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 160, 260, (4 / 3), (8 / 5));
-            $scope.data.eTT = calcETT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 160, 260, (4 / 3), (8 / 5));
-        }
-        else if (infantDetails.Gestation == "27 Weeks") {
-            // $scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 170, 270, (12 / 13), (24 / 19));
-            $scope.data.ptt = calcPTT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 170, 270, (12 / 13), (24 / 19));
-            $scope.data.eTT = calcETT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 170, 270, (12 / 13), (24 / 19));
-        }
-        else if (infantDetails.Gestation == "28 Weeks") {
-            // $scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 180, 280, (6 / 7), (6 / 5));
-            $scope.data.ptt = calcPTT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 180, 280, (6 / 7), (6 / 5));
-            $scope.data.eTT = calcETT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 180, 280, (6 / 7), (6 / 5));
-        }
-        else if (infantDetails.Gestation == "29 Weeks") {
-            //$scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 190, 290, (4 / 5), (8 / 7));
-            $scope.data.ptt = calcPTT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 190, 290, (4 / 5), (8 / 7));
-            $scope.data.eTT = calcETT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 190, 290, (4 / 5), (8 / 7));
-        }
-        else if (infantDetails.Gestation == "30 Weeks") {
-            //$scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 200, 300, (3 / 4), (12 / 11));
-            $scope.data.ptt = calcPTT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 200, 300, (3 / 4), (12 / 11));
-            $scope.data.eTT = calcETT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 200, 300, (3 / 4), (12 / 11));
-        }
-        else if (infantDetails.Gestation == "31 Weeks") {
-            //$scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 210, 310, (12 / 17), (24 / 23));
-            $scope.data.ptt = calcPTT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 210, 310, (12 / 17), (24 / 23));
-            $scope.data.eTT = calcETT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 210, 310, (12 / 17), (24 / 23));
-        }
-        else if (infantDetails.Gestation == "32 Weeks") {
-            //$scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 220, 320, (2 / 3), 1);
-            $scope.data.ptt = calcPTT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 220, 320, (2 / 3), 1);
-            $scope.data.eTT = calcETT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 220, 320, (2 / 3), 1);
-        }
-        else if (infantDetails.Gestation == "33 Weeks") {
-            //$scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 230, 330, (12 / 19), (24 / 25));
-            $scope.data.ptt = calcPTT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 230, 330, (12 / 19), (24 / 25));
-            $scope.data.eTT = calcETT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 230, 330, (12 / 19), (24 / 25));
-        }
-        else if (infantDetails.Gestation == "34 Weeks") {
-            //$scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 240, 340, (3 / 5), (12 / 13));
-            $scope.data.ptt = calcPTT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 240, 340, (3 / 5), (12 / 13));
-            $scope.data.eTT = calcETT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 240, 340, (3 / 5), (12 / 13));
-        }
-        else if (infantDetails.Gestation == "35 Weeks") {
-            //$scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 250, 350, (4 / 7), (8 / 9));
-            $scope.data.ptt = calcPTT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 250, 350, (4 / 7), (8 / 9));
-            $scope.data.eTT = calcETT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 250, 350, (4 / 7), (8 / 9));
-        }
-        else if (infantDetails.Gestation == "36 Weeks") {
-            //$scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 260, 360, (6 / 11), (6 / 7));
-            $scope.data.ptt = calcPTT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 260, 360, (6 / 11), (6 / 7));
-            $scope.data.eTT = calcETT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 260, 360, (6 / 11), (6 / 7));
-        }
-        else if (infantDetails.Gestation == "37 Weeks") {
-            //$scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 270, 370, (12 / 23), (24 / 29));
-            $scope.data.ptt = calcPTT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 270, 370, (12 / 23), (24 / 29));
-            $scope.data.eTT = calcETT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 270, 370, (12 / 23), (24 / 29));
+        if (infantDetails.Age > 336)
+        {
+            alert("Age should be less than or equal to 336 hours.");
+            proceed = false;
+            return;
         }
 
-        if (infantDetails.Gestation == ">=38 Weeks") {
-            //$scope.data.result = calculateFor38Week(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin));
-            $scope.data.ptt = calcPTTWeekGT38(infantDetails.BilirubinUnits, infantDetails.Age);
-            $scope.data.eTT = calcETTWeekGT38(infantDetails.BilirubinUnits, infantDetails.Age, 100, 450, (3.57 / 7))
+        if (infantDetails.BilirubinUnits == "mg/dl")
+        {
+            if(infantDetails.Bilirubin > (550/17.1))
+            {
+                alert("Bilirubin should be less than or equal to " + (550 / 17.1).toFixed(2));
+                proceed = false;
+                return;
+            }
         }
-        
-        $scope.data.ptt = $scope.data.ptt.toFixed(2);
-        $scope.data.eTT = $scope.data.eTT.toFixed(2);
+        else if (infantDetails.Bilirubin > 550 )
+        {
+            alert("Bilirubin should be less than 550");
+            proceed = false;
+            return;
+        }
 
-        $scope.data.result = calculateResultFromThreshold({
-            Age : infantDetails.Age,
-            units: infantDetails.BilirubinUnits,
-            Bilirubin: infantDetails.Bilirubin,
-            eTT: $scope.data.eTT,
-            ptt: $scope.data.ptt,
-            week: infantDetails.Gestation
-        });
+        if (proceed == true) {
+
+            console.log("GetResult called" + infantDetails.Gestation);
+
+            //(y-y1)=((y2-y1)/(x2-x1))*(x-x1) equation of straight line passign through 2 points-- convert to intercept form to find y/y1+x/x1=1
+            //(y-40)=((170-40)/(3-0))(x-0) //(y-80)=((270-80)/(3-0))(x-0)
+
+            if (infantDetails.Gestation == "23 Weeks") {
+                //$scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 130, 230, (4 / 3), (8 / 5));
+                $scope.data.ptt = calcPTT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 130, 230, (4 / 3), (8 / 5));
+                $scope.data.eTT = calcETT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 130, 230, (4 / 3), (8 / 5));
+            }
+            else if (infantDetails.Gestation == "24 Weeks") {
+                //$scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 140, 240, (6 / 5), (3 / 2));
+                $scope.data.ptt = calcPTT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 140, 240, (6 / 5), (3 / 2));
+                $scope.data.eTT = calcETT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 140, 240, (6 / 5), (3 / 2));
+            }
+            else if (infantDetails.Gestation == "25 Weeks") {
+                //$scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 150, 250, (12 / 11), (24 / 17));
+                $scope.data.ptt = calcPTT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 150, 250, (12 / 11), (24 / 17));
+                $scope.data.eTT = calcETT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 150, 250, (12 / 11), (24 / 17));
+            }
+            else if (infantDetails.Gestation == "26 Weeks") {
+                // $scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 160, 260, 1, (4 / 3));
+                $scope.data.ptt = calcPTT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 160, 260, (4 / 3), (8 / 5));
+                $scope.data.eTT = calcETT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 160, 260, (4 / 3), (8 / 5));
+            }
+            else if (infantDetails.Gestation == "27 Weeks") {
+                // $scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 170, 270, (12 / 13), (24 / 19));
+                $scope.data.ptt = calcPTT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 170, 270, (12 / 13), (24 / 19));
+                $scope.data.eTT = calcETT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 170, 270, (12 / 13), (24 / 19));
+            }
+            else if (infantDetails.Gestation == "28 Weeks") {
+                // $scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 180, 280, (6 / 7), (6 / 5));
+                $scope.data.ptt = calcPTT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 180, 280, (6 / 7), (6 / 5));
+                $scope.data.eTT = calcETT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 180, 280, (6 / 7), (6 / 5));
+            }
+            else if (infantDetails.Gestation == "29 Weeks") {
+                //$scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 190, 290, (4 / 5), (8 / 7));
+                $scope.data.ptt = calcPTT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 190, 290, (4 / 5), (8 / 7));
+                $scope.data.eTT = calcETT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 190, 290, (4 / 5), (8 / 7));
+            }
+            else if (infantDetails.Gestation == "30 Weeks") {
+                //$scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 200, 300, (3 / 4), (12 / 11));
+                $scope.data.ptt = calcPTT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 200, 300, (3 / 4), (12 / 11));
+                $scope.data.eTT = calcETT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 200, 300, (3 / 4), (12 / 11));
+            }
+            else if (infantDetails.Gestation == "31 Weeks") {
+                //$scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 210, 310, (12 / 17), (24 / 23));
+                $scope.data.ptt = calcPTT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 210, 310, (12 / 17), (24 / 23));
+                $scope.data.eTT = calcETT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 210, 310, (12 / 17), (24 / 23));
+            }
+            else if (infantDetails.Gestation == "32 Weeks") {
+                //$scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 220, 320, (2 / 3), 1);
+                $scope.data.ptt = calcPTT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 220, 320, (2 / 3), 1);
+                $scope.data.eTT = calcETT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 220, 320, (2 / 3), 1);
+            }
+            else if (infantDetails.Gestation == "33 Weeks") {
+                //$scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 230, 330, (12 / 19), (24 / 25));
+                $scope.data.ptt = calcPTT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 230, 330, (12 / 19), (24 / 25));
+                $scope.data.eTT = calcETT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 230, 330, (12 / 19), (24 / 25));
+            }
+            else if (infantDetails.Gestation == "34 Weeks") {
+                //$scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 240, 340, (3 / 5), (12 / 13));
+                $scope.data.ptt = calcPTT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 240, 340, (3 / 5), (12 / 13));
+                $scope.data.eTT = calcETT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 240, 340, (3 / 5), (12 / 13));
+            }
+            else if (infantDetails.Gestation == "35 Weeks") {
+                //$scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 250, 350, (4 / 7), (8 / 9));
+                $scope.data.ptt = calcPTT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 250, 350, (4 / 7), (8 / 9));
+                $scope.data.eTT = calcETT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 250, 350, (4 / 7), (8 / 9));
+            }
+            else if (infantDetails.Gestation == "36 Weeks") {
+                //$scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 260, 360, (6 / 11), (6 / 7));
+                $scope.data.ptt = calcPTT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 260, 360, (6 / 11), (6 / 7));
+                $scope.data.eTT = calcETT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 260, 360, (6 / 11), (6 / 7));
+            }
+            else if (infantDetails.Gestation == "37 Weeks") {
+                //$scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 270, 370, (12 / 23), (24 / 29));
+                $scope.data.ptt = calcPTT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 270, 370, (12 / 23), (24 / 29));
+                $scope.data.eTT = calcETT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 270, 370, (12 / 23), (24 / 29));
+            }
+
+            if (infantDetails.Gestation == ">=38 Weeks") {
+                //$scope.data.result = calculateFor38Week(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin));
+                $scope.data.ptt = calcPTTWeekGT38(infantDetails.BilirubinUnits, infantDetails.Age);
+                $scope.data.eTT = calcETTWeekGT38(infantDetails.BilirubinUnits, infantDetails.Age, 100, 450, (3.57 / 7))
+            }
+
+            $scope.data.ptt = $scope.data.ptt.toFixed(2);
+            $scope.data.eTT = $scope.data.eTT.toFixed(2);
+
+            $scope.data.result = calculateResultFromThreshold({
+                Age: infantDetails.Age,
+                units: infantDetails.BilirubinUnits,
+                Bilirubin: infantDetails.Bilirubin,
+                eTT: $scope.data.eTT,
+                ptt: $scope.data.ptt,
+                week: infantDetails.Gestation
+            });
+        }
     }
-    
+
     function calculateResultFromThreshold(data) {
         console.log("calculateResultFromThreshold:" + data.Bilirubin)
         var diffP = data.ptt - data.Bilirubin;
@@ -219,38 +247,21 @@ angular.module('starter.controllers', [])
         }
 
         if (data.Bilirubin < data.ptt) {
-            if (data.week == ">=38 Weeks")
-            {
+            if (data.week == ">=38 Weeks") {
                 console.log(">=38 Weeks");
                 var result = "Can consider phototherapy - Repeat serum bilirubin levels in 6-12 hrs";
                 var resultAboveRange = "Start phototherapy (can consider multiple phototherapy)";
                 var multiplier = 1;
                 var closeRangeEnd;
 
-                if(data.units == "mg/dl")
-                {
+                if (data.units == "mg/dl") {
                     multiplier = 17.1;
                 }
                 //Start----This is special consideration if under 24hours age
                 if (data.Age >= 6 && data.Age < 12) {
-                    closeRange    = 112 + ((125 - 112) * ((data.Age - 6) / 6));       
+                    closeRange = 112 + ((125 - 112) * ((data.Age - 6) / 6));
                     closeRangeEnd = 125 + ((150 - 125) * ((data.Age - 6) / 6));
-                    if ((data.Bilirubin * multiplier) >= closeRange && (data.Bilirubin * multiplier) <= closeRangeEnd)
-                    {
-                        console.log("close range+" + closeRange);
-                        console.log("close rangeEnd+" + closeRangeEnd);
-                        return result;
-                    }
-                    else if ((data.Bilirubin * multiplier) > closeRangeEnd)
-                    {
-                        return resultAboveRange;
-                    }
-                }
-                else if (data.Age >= 12 && data.Age < 18) {
-                    closeRange = 125 + (150 - 125) * ((data.Age - 12) / 6);
-                    closeRangeEnd = 150 + ((175 - 150) * ((data.Age - 12) / 6));
-                    if (data.Bilirubin * multiplier >= closeRange && (data.Bilirubin * multiplier) <= closeRangeEnd)
-                    {
+                    if ((data.Bilirubin * multiplier) >= closeRange && (data.Bilirubin * multiplier) <= closeRangeEnd) {
                         console.log("close range+" + closeRange);
                         console.log("close rangeEnd+" + closeRangeEnd);
                         return result;
@@ -259,12 +270,22 @@ angular.module('starter.controllers', [])
                         return resultAboveRange;
                     }
                 }
-                else if (data.Age >= 18 && data.Age < 24)
-                {
+                else if (data.Age >= 12 && data.Age < 18) {
+                    closeRange = 125 + (150 - 125) * ((data.Age - 12) / 6);
+                    closeRangeEnd = 150 + ((175 - 150) * ((data.Age - 12) / 6));
+                    if (data.Bilirubin * multiplier >= closeRange && (data.Bilirubin * multiplier) <= closeRangeEnd) {
+                        console.log("close range+" + closeRange);
+                        console.log("close rangeEnd+" + closeRangeEnd);
+                        return result;
+                    }
+                    else if ((data.Bilirubin * multiplier) > closeRangeEnd) {
+                        return resultAboveRange;
+                    }
+                }
+                else if (data.Age >= 18 && data.Age < 24) {
                     closeRange = 137 + (175 - 137) * ((data.Age - 18) / 6);
                     closeRangeEnd = 175 + ((200 - 175) * ((data.Age - 18) / 6));
-                    if (data.Bilirubin * multiplier >= closeRange && (data.Bilirubin * multiplier) <= closeRangeEnd)
-                    {
+                    if (data.Bilirubin * multiplier >= closeRange && (data.Bilirubin * multiplier) <= closeRangeEnd) {
                         console.log("close range+" + closeRange);
                         console.log("close rangeEnd+" + closeRangeEnd);
                         return result;
@@ -282,9 +303,9 @@ angular.module('starter.controllers', [])
                         return resultAboveRange;
                     }
                 }
-                //end --------------------------------
+                    //end --------------------------------
 
-                else if((data.ptt - data.Bilirubin) <= closeRange)    {
+                else if ((data.ptt - data.Bilirubin) <= closeRange) {
                     return result;
                 }
             }
@@ -327,8 +348,7 @@ angular.module('starter.controllers', [])
         };
     }
 
-    function calcETTWeekGT38(units,x,y2,y4,x2)
-    {
+    function calcETTWeekGT38(units, x, y2, y4, x2) {
         x = x / 24; //hours to days
         if (x >= 0 && x < 1.750) {
             y = (1 + (x / x2)) * (y2);
@@ -340,21 +360,17 @@ angular.module('starter.controllers', [])
         };
     }
 
-    function calcPTTWeekGT38(units,x)
-    {
+    function calcPTTWeekGT38(units, x) {
         x = x / 24;
-        if(x >=0 && x<1)
-        {
+        if (x >= 0 && x < 1) {
             y = (1 + (x / 1)) * 100;
             return returnProperValue(units, y);
         }
-        else if(x>=1 && x<4)
-        {
+        else if (x >= 1 && x < 4) {
             y = (1 + (x / 3)) * 150;
             return returnProperValue(units, y);
         }
-        else if(x>=4)
-        {
+        else if (x >= 4) {
             return returnProperValue(units, 350);
         }
     }
@@ -479,15 +495,78 @@ angular.module('starter.controllers', [])
     }
 })
 
-.controller('profileCtrl', function ($scope, $ionicAnalytics) {
+.controller('profileCtrl', function ($scope, $ionicAnalytics, $http, $state, $ionicLoading) {
+
+    $ionicLoading.show({
+        template: 'Getting Location details...',
+        hideOnStateChange: true
+    });
+
+    $scope.lat = "";
+    $scope.long = "";
+    var geolocationSuccess = function (position) {
+        $ionicLoading.hide();
+        console.log('Latitude: ' + position.coords.latitude + '\n' +
+              'Longitude: ' + position.coords.longitude + '\n' +
+              'Altitude: ' + position.coords.altitude + '\n' +
+              'Accuracy: ' + position.coords.accuracy + '\n' +
+              'Altitude Accuracy: ' + position.coords.altitudeAccuracy + '\n' +
+              'Heading: ' + position.coords.heading + '\n' +
+              'Speed: ' + position.coords.speed + '\n' +
+              'Timestamp: ' + position.timestamp + '\n');
+        $scope.lat = position.coords.latitude;
+        $scope.long = position.coords.longitude;
+
+        alert("Long,Lat retireved: " + $scope.lat + "," + $scope.long);
+    };
+
+    function onError(error) {
+        $ionicLoading.hide();
+
+        alert('code: ' + error.code + '\n' +
+              'message: ' + error.message + '\n');
+    }
+    navigator.geolocation.getCurrentPosition(geolocationSuccess, onError, { maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
 
     $scope.logAnalytics = function (profileDetails) {
         console.log("check" + profileDetails.Occupation);
-        $ionicAnalytics.track('Profile', {
-            Occupation: profileDetails.Occupation,
-            speciality: profileDetails.speciality,
-            other: profileDetails.other
-        });
-        window.localStorage['isProfileLogged'] = true;
+
+        if ($scope.lat != "") {
+            $http.get("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + $scope.lat + "," + $scope.long)
+               .success(function (results) {
+                   console.log(results);
+                   var mapsAPi = results.results[0].formatted_address;
+                   console.log("formatted address:" + mapsAPi);
+
+                   $ionicAnalytics.track('Profile', {
+                       Occupation: profileDetails.Occupation,
+                       speciality: profileDetails.speciality,
+                       other: profileDetails.other,
+                       lat: $scope.lat,
+                       long: $scope.long,
+                       address: mapsAPi
+                   });
+                   window.localStorage['isProfileLogged'] = true;
+                   alert("Profile data saved. Address: " + mapsAPi + " Long,Lat: " + $scope.lat + "," + $scope.long);
+                   $state.go('app.startpage');
+               })
+               .error(function () {
+                   alert("There was an error")
+                   console.log("google maps error");
+                   $state.go('app.startpage');
+               });
+        }
+        else {
+            $ionicAnalytics.track('Profile', {
+                Occupation: profileDetails.Occupation,
+                speciality: profileDetails.speciality,
+                other: profileDetails.other,
+                lat: "Not Available",
+                long: "Not Available",
+                address: "Not Available"
+            });
+            window.localStorage['isProfileLogged'] = true;
+            $state.go('app.startpage');
+        }
     }
 });
