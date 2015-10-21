@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic','ionic.service.core', 'ionic.service.analytics', 'starter.controllers','chart.js'])
+angular.module('starter', ['ionic','ngCordova','ionic.service.core',  'ionic.service.analytics', 'starter.controllers','chart.js'])
 
 
 
@@ -56,7 +56,16 @@ angular.module('starter', ['ionic','ionic.service.core', 'ionic.service.analytic
             controller: 'GraphCtrl'
          }
        }
-    })
+        })
+        .state('app.acceptance', {
+            url: '/acceptance',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/acceptance.html',
+                    controller: 'AcceptanceCtrl'
+                }
+            }
+        })
     .state('app.help', {
         url: '/help',
         views: {

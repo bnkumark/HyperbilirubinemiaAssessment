@@ -1,5 +1,9 @@
 <ion-view view-title="">
-    <div ng-controller="StartPageCtrl">
+    <!--<div ng-controller="StartPageCtrl">-->
+    <ion-nav-title>
+        <!-- <img class="title-image" src="img/logo.png">-->
+        <h1 class="title" style="right:50px;color:dodgerblue;font-weight:bold;font-size:xx-large;">Biliguru</h1>
+    </ion-nav-title>
         <ion-content>
             <h3 class="title item">Newborn Hyperbilirubinemia Assessment</h3>
             <form name="submitform" novalidate class="css-form" ng-model="infantDetails" ng-submit="GetResult(infantDetails)">
@@ -8,26 +12,30 @@
                     <label class="item-input-wrapper">
                         <span class="input-label positive">Infant Age:</span>
                         <input type="number" name="name" ng-model="infantDetails.Age" required>
+            
                     </label>
                     <span>&nbsp;</span>
                     <span>Hours</span>
                 </div>
+                <code class="assertive padding" ng-if="submitform.name.$touched&&submitform.name.$error.required">Infant Age is required</code>
 
                 <div class="item item-input-inset">
                     <label class="item-input-wrapper">
                         <span class="input-label positive">Total Bilirubin:</span>
-                        <input type="number" ng-model="infantDetails.Bilirubin" required>
+                        <input type="number" name="Bilirubin" ng-model="infantDetails.Bilirubin" required>
                     </label>
                     <span>&nbsp;</span>
-                    <select id="units" class="small" name='options' ng-model="infantDetails.BilirubinUnits" required>
+                    <select id="units" class="small" name='Bilirubinoptions' ng-model="infantDetails.BilirubinUnits" required>
                         <option selected>mg/dl</option>
                         <option>micromol/litre</option>
                     </select>
                 </div>
+                <code class="assertive padding" ng-if="submitform.Bilirubin.$touched&&submitform.Bilirubin.$error.required">Total Bilirubin is required</code>
+                <code class="assertive padding" ng-if="submitform.Bilirubinoptions.$touched&&submitform.Bilirubinoptions.$error.required">Total Bilirubin units must be selected</code>
 
                 <label class="item item-input item-select">
                     <div class="input-label positive">
-                        Gestation
+                        Gestation Age:
                     </div>
                     <select id="Gestation " name='options' ng-model="infantDetails.Gestation" required>
                         <option>23 Weeks</option>
@@ -51,7 +59,9 @@
                 <div class="item item-input-inset">
                     <input class="item-input-wrapper button button-positive" ng-disabled="!submitform.$valid" value="Recommended Treatment" type="submit">
                 </div>
+                <code class="assertive item item-text-wrap" ng-show="!submitform.$valid">Enter all details to enable Recommended Treatment!</code>
             </form>
+      
             <div class="card" ng-show="data.result!=''">
                 <div class="item item-text-wrap">
                     {{data.result}}

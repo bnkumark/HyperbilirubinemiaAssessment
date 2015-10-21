@@ -10,35 +10,7 @@ angular.module('starter.controllers', [])
     //});
 
     // Form data for the login modal
-    $scope.loginData = {};
-
-    // Create the login modal that we will use later
-    $ionicModal.fromTemplateUrl('templates/login.html', {
-        scope: $scope
-    }).then(function (modal) {
-        $scope.modal = modal;
-    });
-
-    // Triggered in the login modal to close it
-    $scope.closeLogin = function () {
-        $scope.modal.hide();
-    };
-
-    // Open the login modal
-    $scope.login = function () {
-        $scope.modal.show();
-    };
-
-    // Perform the login action when the user submits the login form
-    $scope.doLogin = function () {
-        console.log('Doing login', $scope.loginData);
-
-        // Simulate a login delay. Remove this and replace with your login
-        // code if using a login system
-        $timeout(function () {
-            $scope.closeLogin();
-        }, 1000);
-    };
+ 
 })
 
 .controller("GraphCtrl", ['$scope', '$timeout', function ($scope, $timeout) {
@@ -91,12 +63,24 @@ angular.module('starter.controllers', [])
 
 }])
 
-.controller('StartPageCtrl', function ($scope, $state) {
+.controller('StartPageCtrl', function ($scope, $state, $cordovaSocialSharing, $ionicSideMenuDelegate) {
 
-    if (window.localStorage['isProfileLogged'] != "true") {
-        console.log('calling profile');
-        $state.go('app.profile');
-    };
+    $scope.$on('$ionicView.enter', function () {
+        // Code you want executed every time view is opened
+        console.log('Opened!')
+        if (window.localStorage['isAccepted'] != "true") {
+            console.log('calling acceptance');
+            $state.go('app.acceptance');
+        }
+        else if (window.localStorage['isProfileLogged'] != "true") {
+            console.log('calling profile');
+            $state.go('app.profile');
+        };
+    })
+
+    
+
+    $ionicSideMenuDelegate.canDragContent(true);
 
     $scope.data = {
         result: '',
@@ -110,24 +94,20 @@ angular.module('starter.controllers', [])
         console.log("infant.age:" + infantDetails.Age)
         console.log("infant.age:" + infantDetails.Age <= 336)
 
-        if (infantDetails.Age > 336)
-        {
+        if (infantDetails.Age > 336) {
             alert("Age should be less than or equal to 336 hours.");
             proceed = false;
             return;
         }
 
-        if (infantDetails.BilirubinUnits == "mg/dl")
-        {
-            if(infantDetails.Bilirubin > (550/17.1))
-            {
+        if (infantDetails.BilirubinUnits == "mg/dl") {
+            if (infantDetails.Bilirubin > (550 / 17.1)) {
                 alert("Bilirubin should be less than or equal to " + (550 / 17.1).toFixed(2));
                 proceed = false;
                 return;
             }
         }
-        else if (infantDetails.Bilirubin > 550 )
-        {
+        else if (infantDetails.Bilirubin > 550) {
             alert("Bilirubin should be less than 550");
             proceed = false;
             return;
@@ -320,7 +300,7 @@ angular.module('starter.controllers', [])
             }
         }
         else {
-            return "Exchange transfusion and repeat serum bilirubin levels in 6-12 hours";
+            return "Exchange transfusion (Start continuous multiple phototherapy till you prepare for exchange transfusion, and repeat serum bilirubin levels in 6-12 hours)";
         }
     }
 
@@ -497,76 +477,105 @@ angular.module('starter.controllers', [])
 
 .controller('profileCtrl', function ($scope, $ionicAnalytics, $http, $state, $ionicLoading) {
 
-    $ionicLoading.show({
-        template: 'Getting Location details...',
-        hideOnStateChange: true
-    });
+    //$ionicLoading.show({
+    //    template: 'Getting Location details...',
+    //    hideOnStateChange: true
+    //});
 
-    $scope.lat = "";
-    $scope.long = "";
-    var geolocationSuccess = function (position) {
-        $ionicLoading.hide();
-        console.log('Latitude: ' + position.coords.latitude + '\n' +
-              'Longitude: ' + position.coords.longitude + '\n' +
-              'Altitude: ' + position.coords.altitude + '\n' +
-              'Accuracy: ' + position.coords.accuracy + '\n' +
-              'Altitude Accuracy: ' + position.coords.altitudeAccuracy + '\n' +
-              'Heading: ' + position.coords.heading + '\n' +
-              'Speed: ' + position.coords.speed + '\n' +
-              'Timestamp: ' + position.timestamp + '\n');
-        $scope.lat = position.coords.latitude;
-        $scope.long = position.coords.longitude;
+    //  $scope.lat = "";
+    // $scope.long = "";
+    //var geolocationSuccess = function (position) {
+    //    $ionicLoading.hide();
+    //    console.log('Latitude: ' + position.coords.latitude + '\n' +
+    //          'Longitude: ' + position.coords.longitude + '\n' +
+    //          'Altitude: ' + position.coords.altitude + '\n' +
+    //          'Accuracy: ' + position.coords.accuracy + '\n' +
+    //          'Altitude Accuracy: ' + position.coords.altitudeAccuracy + '\n' +
+    //          'Heading: ' + position.coords.heading + '\n' +
+    //          'Speed: ' + position.coords.speed + '\n' +
+    //          'Timestamp: ' + position.timestamp + '\n');
+    //    $scope.lat = position.coords.latitude;
+    //    $scope.long = position.coords.longitude;
 
-        alert("Long,Lat retireved: " + $scope.lat + "," + $scope.long);
-    };
+    //    alert("Long,Lat retireved: " + $scope.lat + "," + $scope.long);
+    //};
 
-    function onError(error) {
-        $ionicLoading.hide();
+    //function onError(error) {
+    //    $ionicLoading.hide();
 
-        alert('code: ' + error.code + '\n' +
-              'message: ' + error.message + '\n');
-    }
-    navigator.geolocation.getCurrentPosition(geolocationSuccess, onError, { maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
+    //    alert('code: ' + error.code + '\n' +
+    //          'message: ' + error.message + '\n');
+    //}
+    //navigator.geolocation.getCurrentPosition(geolocationSuccess, onError, { maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
 
     $scope.logAnalytics = function (profileDetails) {
         console.log("check" + profileDetails.Occupation);
 
-        if ($scope.lat != "") {
-            $http.get("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + $scope.lat + "," + $scope.long)
-               .success(function (results) {
-                   console.log(results);
-                   var mapsAPi = results.results[0].formatted_address;
-                   console.log("formatted address:" + mapsAPi);
+        //if ($scope.lat != "") {
+        //    $http.get("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + $scope.lat + "," + $scope.long)
+        //       .success(function (results) {
+        //           console.log(results);
+        //           var mapsAPi = results.results[0].formatted_address;
+        //           console.log("formatted address:" + mapsAPi);
 
-                   $ionicAnalytics.track('Profile', {
-                       Occupation: profileDetails.Occupation,
-                       speciality: profileDetails.speciality,
-                       other: profileDetails.other,
-                       lat: $scope.lat,
-                       long: $scope.long,
-                       address: mapsAPi
-                   });
-                   window.localStorage['isProfileLogged'] = true;
-                   alert("Profile data saved. Address: " + mapsAPi + " Long,Lat: " + $scope.lat + "," + $scope.long);
-                   $state.go('app.startpage');
-               })
-               .error(function () {
-                   alert("There was an error")
-                   console.log("google maps error");
-                   $state.go('app.startpage');
-               });
+        //           $ionicAnalytics.track('Profile', {
+        //               Occupation: profileDetails.Occupation,
+        //               speciality: profileDetails.speciality,
+        //               other: profileDetails.other,
+        //               lat: $scope.lat,
+        //               long: $scope.long,
+        //               address: mapsAPi
+        //           });
+        //           window.localStorage['isProfileLogged'] = true;
+        //           alert("Profile data saved. Address: " + mapsAPi + " Long,Lat: " + $scope.lat + "," + $scope.long);
+        //           $state.go('app.startpage');
+        //       })
+        //       .error(function () {
+        //           alert("There was an error")
+        //           console.log("google maps error");
+        //           $state.go('app.startpage');
+        //       });
+        //}
+        //else {
+        $ionicAnalytics.track('Profile', {
+            Occupation: profileDetails.Occupation,
+            speciality: profileDetails.speciality,
+            other: profileDetails.other
+            //lat: "Not Available",
+            //long: "Not Available",
+            //address: "Not Available"
+        });
+        window.localStorage['isProfileLogged'] = true;
+        $state.go('app.startpage');
+        // }
+    }
+})
+.controller('AcceptanceCtrl', function ($scope, $http, $state, $ionicSideMenuDelegate, $ionicNavBarDelegate) {
+    console.log('AcceptanceCtrl')
+    //$scope.showcontent = false;
+    $ionicNavBarDelegate.showBackButton(false);
+    $ionicSideMenuDelegate.canDragContent(false);
+    //if (window.localStorage['isAccepted'] == "true") {
+    //    console.log('calling acceptance');
+    //    $state.go('app.startpage');
+    //    $ionicSideMenuDelegate.canDragContent(true);
+    //}
+    //else
+    //{
+    //    $ionicSideMenuDelegate.canDragContent(false);
+    //    $scope.showcontent = true;
+    //}
+
+    $scope.Acceptance = function () {
+        window.localStorage['isAccepted'] = true;
+        $ionicSideMenuDelegate.canDragContent(true);
+        if (window.localStorage['isProfileLogged'] != "true") {
+            console.log('calling profile');
+            $state.go('app.profile');
         }
         else {
-            $ionicAnalytics.track('Profile', {
-                Occupation: profileDetails.Occupation,
-                speciality: profileDetails.speciality,
-                other: profileDetails.other,
-                lat: "Not Available",
-                long: "Not Available",
-                address: "Not Available"
-            });
-            window.localStorage['isProfileLogged'] = true;
             $state.go('app.startpage');
         }
+        $ionicSideMenuDelegate.canDragContent(true);
     }
 });
