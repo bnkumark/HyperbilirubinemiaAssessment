@@ -48,15 +48,15 @@ angular.module('starter', ['ionic','ngCordova','ionic.service.core',  'ionic.ser
         }
     })
         
-        .state('app.graph', {
-           url: '/graph',
-          views: {
-          'menuContent': {
-            templateUrl: 'templates/graph.html',
-            controller: 'GraphCtrl'
-         }
-       }
-        })
+       // .state('app.graph', {
+       //    url: '/graph',
+       //   views: {
+       //   'menuContent': {
+       //     templateUrl: 'templates/graph.html',
+       //     controller: 'GraphCtrl'
+       //  }
+       //}
+       // })
         .state('app.acceptance', {
             url: '/acceptance',
             views: {

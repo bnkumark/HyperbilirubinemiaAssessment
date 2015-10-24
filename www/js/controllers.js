@@ -13,55 +13,55 @@ angular.module('starter.controllers', [])
  
 })
 
-.controller("GraphCtrl", ['$scope', '$timeout', function ($scope, $timeout) {
+//.controller("GraphCtrl", ['$scope', '$timeout', function ($scope, $timeout) {
 
-    $scope.labels = ["0", "3", "6", "9", "12", "14"];
-    $scope.series = ["Phototherapy Line", "Exchange Transfusion Line"];
-    $scope.data = [
-       [40, 160, 160, 160, 160, 160],
-       [80, 260, 260, 260, 260, 260]
-    ];
-    $scope.bezierCurve = [false, false];
-    $scope.onClick = function (points, evt) {
-        console.log(points, evt);
-    };
+//    $scope.labels = ["0", "3", "6", "9", "12", "14"];
+//    $scope.series = ["Phototherapy Line", "Exchange Transfusion Line"];
+//    $scope.data = [
+//       [40, 160, 160, 160, 160, 160],
+//       [80, 260, 260, 260, 260, 260]
+//    ];
+//    $scope.bezierCurve = [false, false];
+//    $scope.onClick = function (points, evt) {
+//        console.log(points, evt);
+//    };
 
-    // Simulate async data update
-    $timeout(function () {
-        $scope.data = [
-          [40, 160, 160, 160, 160, 160],
-          [80, 260, 260, 260, 260, 260]
-        ];
-    }, 3000);
+//    // Simulate async data update
+//    $timeout(function () {
+//        $scope.data = [
+//          [40, 160, 160, 160, 160, 160],
+//          [80, 260, 260, 260, 260, 260]
+//        ];
+//    }, 3000);
 
 
-    /*var data = {
-       labels : ["0","3","6","9","12","14"],
-       datasets : [
-         {
-           label: "Phototherapy Line",
-           fillColor : "rgba(220,220,220,0.5)",
-           strokeColor : "rgba(220,220,220,1)",
-           pointColor : "rgba(220,220,220,1)",
-           pointStrokeColor : "#fff",
-           bezierCurve : false,
-           data : [40, 160, 160, 160, 160, 160]
-         },
-         {
-           label: "Exchange Transfusion Line",
-           fillColor : "rgba(151,187,205,0.5)",
-           strokeColor : "rgba(151,187,205,1)",
-           pointColor : "rgba(151,187,205,1)",
-           pointStrokeColor : "#fff",
-           bezierCurve : false,
-           data : [80, 260, 260, 260, 260, 260]
-         }
-       ]
-     }
+//    /*var data = {
+//       labels : ["0","3","6","9","12","14"],
+//       datasets : [
+//         {
+//           label: "Phototherapy Line",
+//           fillColor : "rgba(220,220,220,0.5)",
+//           strokeColor : "rgba(220,220,220,1)",
+//           pointColor : "rgba(220,220,220,1)",
+//           pointStrokeColor : "#fff",
+//           bezierCurve : false,
+//           data : [40, 160, 160, 160, 160, 160]
+//         },
+//         {
+//           label: "Exchange Transfusion Line",
+//           fillColor : "rgba(151,187,205,0.5)",
+//           strokeColor : "rgba(151,187,205,1)",
+//           pointColor : "rgba(151,187,205,1)",
+//           pointStrokeColor : "#fff",
+//           bezierCurve : false,
+//           data : [80, 260, 260, 260, 260, 260]
+//         }
+//       ]
+//     }
  
-    // $scope.myChart.data = data;*/
+//    // $scope.myChart.data = data;*/
 
-}])
+//}])
 
 .controller('StartPageCtrl', function ($scope, $state, $cordovaSocialSharing, $ionicSideMenuDelegate) {
 
@@ -77,9 +77,7 @@ angular.module('starter.controllers', [])
             $state.go('app.profile');
         };
     })
-
     
-
     $ionicSideMenuDelegate.canDragContent(true);
 
     $scope.data = {
@@ -137,8 +135,10 @@ angular.module('starter.controllers', [])
             }
             else if (infantDetails.Gestation == "26 Weeks") {
                 // $scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 160, 260, 1, (4 / 3));
-                $scope.data.ptt = calcPTT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 160, 260, (4 / 3), (8 / 5));
-                $scope.data.eTT = calcETT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 160, 260, (4 / 3), (8 / 5));
+                $scope.data.ptt = calcPTT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 160, 260, 1, (4 / 3));
+                $scope.data.eTT = calcETT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 160, 260, 1, (4 / 3));
+                //$scope.data.ptt = calcPTT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 160, 260, (4 / 3), (8 / 5));
+                //$scope.data.eTT = calcETT(infantDetails.BilirubinUnits, infantDetails.Age, 40, 80, 160, 260, (4 / 3), (8 / 5));
             }
             else if (infantDetails.Gestation == "27 Weeks") {
                 // $scope.data.result = calcRes(infantDetails.Age, GetBilurubinValueInMicromol(infantDetails.BilirubinUnits, infantDetails.Bilirubin), 40, 80, 170, 270, (12 / 13), (24 / 19));
@@ -241,13 +241,25 @@ angular.module('starter.controllers', [])
                 if (data.Age >= 6 && data.Age < 12) {
                     closeRange = 112 + ((125 - 112) * ((data.Age - 6) / 6));
                     closeRangeEnd = 125 + ((150 - 125) * ((data.Age - 6) / 6));
+                    console.log("closeRange:" + closeRange);
+                    console.log("closeRangeEnd:" + closeRangeEnd);
+                    console.log("(data.Bilirubin * multiplier):" + (data.Bilirubin * multiplier));
+
                     if ((data.Bilirubin * multiplier) >= closeRange && (data.Bilirubin * multiplier) <= closeRangeEnd) {
-                        console.log("close range+" + closeRange);
-                        console.log("close rangeEnd+" + closeRangeEnd);
                         return result;
                     }
                     else if ((data.Bilirubin * multiplier) > closeRangeEnd) {
+                        console.log( resultAboveRange);
                         return resultAboveRange;
+                    }
+                    else if((data.Bilirubin * multiplier) >= 100)
+                    {
+                        return "Repeat serum bilirubin measurement in 6-12 hrs";
+                    }
+                    else
+                    {
+                        console.log("none of the above");
+                        return "No treatment required. Repeat serum bilirubin levels if clinically icteric in 6-12 hrs";
                     }
                 }
                 else if (data.Age >= 12 && data.Age < 18) {
@@ -261,6 +273,13 @@ angular.module('starter.controllers', [])
                     else if ((data.Bilirubin * multiplier) > closeRangeEnd) {
                         return resultAboveRange;
                     }
+                    else if ((data.Bilirubin * multiplier) >= 100) {
+                        return "Repeat serum bilirubin measurement in 6-12 hrs";
+                    }
+                    else {
+                        console.log("none of the above");
+                        return "No treatment required. Repeat serum bilirubin levels if clinically icteric in 6-12 hrs";
+                    }
                 }
                 else if (data.Age >= 18 && data.Age < 24) {
                     closeRange = 137 + (175 - 137) * ((data.Age - 18) / 6);
@@ -273,6 +292,13 @@ angular.module('starter.controllers', [])
                     else if ((data.Bilirubin * multiplier) > closeRangeEnd) {
                         return resultAboveRange;
                     }
+                    else if ((data.Bilirubin * multiplier) >= 100) {
+                        return "Repeat serum bilirubin measurement in 6-12 hrs";
+                    }
+                    else {
+                        console.log("none of the above");
+                        return "No treatment required. Repeat serum bilirubin levels if clinically icteric in 6-12 hrs";
+                    }
                 }
                 else if (data.Age == 24) {
                     if (data.Bilirubin * multiplier >= 150 && (data.Bilirubin * multiplier) <= 200) {
@@ -282,6 +308,13 @@ angular.module('starter.controllers', [])
                     else if ((data.Bilirubin * multiplier) > 200) {
                         return resultAboveRange;
                     }
+                    else if ((data.Bilirubin * multiplier) >= 100) {
+                        return "Repeat serum bilirubin measurement in 6-12 hrs";
+                    }
+                    else {
+                        console.log("none of the above");
+                        return "No treatment required. Repeat serum bilirubin levels if clinically icteric in 6-12 hrs";
+                    }
                 }
                     //end --------------------------------
 
@@ -289,7 +322,14 @@ angular.module('starter.controllers', [])
                     return result;
                 }
             }
-            return "No treatment required. Repeat serum bilirubin levels if clinically icteric in 6-12 hrs";
+            else {
+                if ((data.ptt - data.Bilirubin) <= closeRange) {
+                    return "Can consider phototherapy - Repeat serum bilirubin levels in 6-12 hrs";
+                }
+                else {
+                    return "No treatment required. Repeat serum bilirubin levels if clinically icteric in 6-12 hrs";
+                }
+            }
         }
         else if (data.Bilirubin < data.eTT) {
             if ((data.eTT - data.Bilirubin) <= closeRange) {

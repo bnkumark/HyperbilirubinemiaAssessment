@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="com.biliguru.biliguru" version="0.0.19" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.biliguru.biliguru" version="0.0.22" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>Biliguru</name>
   <description>&#xD;&#xD;
         Biliguru.&#xD;&#xD;
     </description>
-  <author email="datekalpesh@gmail.com" href="http://ionicframework.com/">&#xD;&#xD;
+  <author email="datekalpesh@gmail.com" href="email:datekalpesh@gmail.com">&#xD;&#xD;
       Biliguru&#xD;&#xD;
     </author>
   <content src="index.html"/>
@@ -16,6 +16,7 @@
   <preference name="BackupWebStorage" value="none"/>
   <preference name="SplashScreen" value="screen"/>
   <preference name="SplashScreenDelay" value="3000"/>
+<preference name="AutoHideSplashScreen" value="false" />
   <feature name="StatusBar">
     <param name="ios-package" value="CDVStatusBar" onload="true"/>
   </feature>
