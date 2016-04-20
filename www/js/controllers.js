@@ -319,8 +319,14 @@ angular.module('starter.controllers', [])
                     //end --------------------------------
 
                 else if ((data.ptt - data.Bilirubin) <= closeRange) {
-                    return result;
+					console.log((data.ptt - data.Bilirubin) + " " + result);
+					return result;
                 }
+				else
+				{
+					console.log("bilirubin is not close range");
+					return "No treatment required.";
+				}
             }
             else {
                 if ((data.ptt - data.Bilirubin) <= closeRange) {

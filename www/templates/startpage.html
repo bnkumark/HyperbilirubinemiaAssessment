@@ -9,27 +9,41 @@
             <form name="submitform" novalidate class="css-form" ng-model="infantDetails" ng-submit="GetResult(infantDetails)">
 
                 <div class="item item-input-inset">
-                    <label class="item-input-wrapper">
+                    <label class="col-1 item-input-wrapper">
                         <span class="input-label positive">Infant Age:</span>
                         <input type="number" name="name" ng-model="infantDetails.Age" required>
             
                     </label>
                     <span>&nbsp;</span>
-                    <span>Hours</span>
+                    <span class="col-2">Hours</span>
                 </div>
                 <code class="assertive padding" ng-if="submitform.name.$touched&&submitform.name.$error.required">Infant Age is required</code>
 
+<!-- 				<div class="row responsive-md">
+  <div class="col col-75">
+   <label class="item-input-wrapper">
+                        <span class="input-label positive">Total Bilirubin:</span>
+                        <input type="number" name="Bilirubin" ng-model="infantDetails.Bilirubin" required>
+                    </label>
+  </div>
+  <div class="col">
+    <select id="units" class="small" name='Bilirubinoptions' ng-model="infantDetails.BilirubinUnits" required>
+                        <option selected>mg/dl</option>
+                        <option>micromol/litre</option>
+                    </select>
+  </div>
+  </div> -->
                 <div class="item item-input-inset">
-                    <label class="item-input-wrapper">
+                    <label class="col-1 item-input-wrapper">
                         <span class="input-label positive">Total Bilirubin:</span>
                         <input type="number" name="Bilirubin" ng-model="infantDetails.Bilirubin" required>
                     </label>
                     <span>&nbsp;</span>
-                    <select id="units" class="small" name='Bilirubinoptions' ng-model="infantDetails.BilirubinUnits" required>
+                    <select id="units" class=" col-2 small" name='Bilirubinoptions' ng-model="infantDetails.BilirubinUnits" required>
                         <option selected>mg/dl</option>
                         <option>micromol/litre</option>
                     </select>
-                </div>
+                </div> 
                 <code class="assertive padding" ng-if="submitform.Bilirubin.$touched&&submitform.Bilirubin.$error.required">Total Bilirubin is required</code>
                 <code class="assertive padding" ng-if="submitform.Bilirubinoptions.$touched&&submitform.Bilirubinoptions.$error.required">Total Bilirubin units must be selected</code>
 
@@ -82,3 +96,11 @@
             </div>-->
         </ion-content>
 </ion-view>
+<style>
+@media only screen and (max-width: 414px) {
+    /* For mobile phones: */
+    [class*="col-"] {
+        width: 80%;
+    }
+}
+</style>
